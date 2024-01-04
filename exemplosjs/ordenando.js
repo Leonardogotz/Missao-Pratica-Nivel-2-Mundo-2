@@ -4,7 +4,8 @@ const swap = (arr, pos1, pos2) => {
 };
 
 // Função para embaralhar os elementos de um vetor com base na quantidade de trocas
-const shuffle = (arr, numSwaps) => {
+const shuffle = (arr) => {
+    const numSwaps = arr.length * 2; // Modifique o fator (2) conforme necessário
     for (let i = 0; i < numSwaps; i++) {
         const randomIndex1 = Math.floor(Math.random() * arr.length);
         const randomIndex2 = Math.floor(Math.random() * arr.length);
