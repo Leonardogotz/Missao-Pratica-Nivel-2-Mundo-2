@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários de Teste via REST</title>
+    <!-- Inclusão da folha de estilos do Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container bg-warning">
+    <h1>Usuários de Teste via REST</h1>
+    <!-- Referência ao site reqres.in -->
+    <p>Os dados são fornecidos por <a href="https://reqres.in" target="_blank">reqres.in</a> no formato JSON gratuitamente.</p>
+
+    <!-- Div para os usuários -->
+    <div id="usuarios" class="container-fluid">
+        <div class="row">
+            <!-- Painel de usuário em colunas -->
+            <div v-for="(user, index) in users" :key="index" class="col-md-4 mb-3">
+                <div class="card p-2 m-3">
+                    <!-- Imagem do usuário -->
+                    <img :src="user.avatar" class="card-img-top" alt="Imagem do usuário">
+                    <div class="card-body">
+                        <!-- Título do usuário -->
+                        <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                        <!-- Email do usuário -->
+                        <p class="card-text">{{ user.email }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inclusão da biblioteca JavaScript do Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <!-- Inclusão da biblioteca JavaScript do jQuery (se necessário) -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+    <script>
+        // Objeto Vue
+        const app = new Vue({
+            el: '#usuarios',
+            data() {
+                return {
+                    users: [] // Vetor vazio para armazenar os usuários
+                };
+            },
+            mounted() {
+                this.loadUsers(); // Chamada da função para carregar os usuários ao montar
+            },
+            methods: {
+                loadUsers() {
+                    // Utilização do fetch API para obter os dados JSON
+                    fetch('https://reqres.in/api/users?per_page=10')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.users = data.data; // Preenchimento do vetor users com os dados recebidos
+                        })
+                        .catch(error => {
+                            console.error('Erro ao carregar os usuários:', error);
+                        });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
